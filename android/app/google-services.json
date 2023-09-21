@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "334368685850",
+    "project_id": "manifest-pulsar-362508",
+    "storage_bucket": "manifest-pulsar-362508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334368685850:android:9a8c97d6dc9101d5aaf6a3",
+        "android_client_info": {
+          "package_name": "com.hooralogin.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDypSngtp-Sah621cDvLL0r5jiHaNS8ZIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
