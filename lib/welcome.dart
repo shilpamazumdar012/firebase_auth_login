@@ -11,8 +11,8 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Material(
-      child: Center(
+    return const Scaffold(
+      body: Center(
         child: Column(
           children: [
             Text('Welcome Screen', style: TextStyle(fontSize: 24)),

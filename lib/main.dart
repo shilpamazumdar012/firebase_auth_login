@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -12,11 +13,17 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  final String? isLoggedIn = await secureStorage.read(key: 'isLoggedIn');
+
+  runApp(MyApp(isLoggedIn: isLoggedIn == 'true'));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  MyApp({required this.isLoggedIn});
 
   // This widget is the root of your application.
   @override
@@ -27,7 +34,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // ignore: unrelated_type_equality_checks
+      home: isLoggedIn == true
+          ? WelcomeScreen()
+          : const LoginScreen(title: 'Flutter Demo Home Page'),
       routes: {
         '/otp': (context) => OtpScreen(verificationId: ''),
         '/welcome': (context) => WelcomeScreen(),
@@ -37,24 +47,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  String phoneNumber = '+91 1234 567 890';
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class _LoginScreenState extends State<LoginScreen> {
+  String phoneNumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -71,15 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
               'Login',
               style: TextStyle(fontSize: 24),
             ),
-            Padding(
+             Padding(
               padding: EdgeInsets.all(16.0),
               child: TextField(
-                //  onChanged: (value) {
-                //     setState(() {
-                //       phoneNumber = value;
-                //     });
-                //   },
-                decoration: const InputDecoration(
+                 onChanged: (value) {
+                    setState(() {
+                      phoneNumber = value;
+                    });
+                  },
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter your phone number',
                 ),
@@ -91,11 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

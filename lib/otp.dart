@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_login/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class OtpScreen extends StatefulWidget {
   final String verificationId;
@@ -50,12 +51,17 @@ class _OtpScreenState extends State<OtpScreen> {
 Future<void> signInWithOTP(
     _auth, String otp, String verificationId, context) async {
   try {
+    final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId,
       smsCode: otp,
     );
     await _auth.signInWithCredential(credential);
     print('User is signed in');
+    
+    await secureStorage.write(key: 'isLoggedIn', value: 'true');
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => WelcomeScreen(),
