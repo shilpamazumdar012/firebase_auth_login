@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:334368685850:android:b1f4f2b55962eb36aaf6a3",
+        "android_client_info": {
+          "package_name": "com.example.firebase_auth_login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDypSngtp-Sah621cDvLL0r5jiHaNS8ZIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:334368685850:android:9a8c97d6dc9101d5aaf6a3",
         "android_client_info": {
           "package_name": "com.hooralogin.test"
